@@ -3,11 +3,15 @@ import connectDB from "./database/db.js";
 
 const PORT = 5000;
 
-app.listen(PORT, async (req, res) => {
+async function startServer() {
   try {
     await connectDB();
-    console.log(`server started on PORT:${PORT}`);
+    app.listen(PORT, async (req, res) => {
+      console.log(`server started on PORT:${PORT}`);
+    });
   } catch (error) {
-    console.log("error connecting to server");
+    console.log(`Error starting server ${error}`);
   }
-});
+}
+
+startServer();
