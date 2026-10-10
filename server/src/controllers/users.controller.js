@@ -212,21 +212,23 @@ export const loginUser = async (req, res) => {
       });
     }
 
+    email = email.trim().toLowerCase();
+
     const user = await User.findOne({ email: email });
 
     if (!user) {
-      return res.status(404).json({
+      return res.status(401).json({
         success: false,
-        message: "User not found",
+        message: "Invalid email or password",
       });
     }
 
     const passwordMatched = await user.verifyPassword(password);
 
     if (!passwordMatched) {
-      return res.status(403).json({
+      return res.status(401).json({
         success: false,
-        message: "Password did not match",
+        message: "Invalid email or password",
       });
     }
 
