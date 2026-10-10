@@ -212,9 +212,9 @@ export const loginUser = async (req, res) => {
       });
     }
 
-    email = email.trim().toLowerCase();
+    const normalizedEmail = email.trim().toLowerCase();
 
-    const user = await User.findOne({ email: email });
+    const user = await User.findOne({ email: normalizedEmail });
 
     if (!user) {
       return res.status(401).json({
