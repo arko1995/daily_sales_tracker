@@ -1,4 +1,8 @@
 import User from "../models/users.model.js";
+import jwt from "jsonwebtoken";
+import dotenv from "dotenv";
+
+dotenv.config;
 
 export const createUser = async (req, res) => {
   try {
@@ -33,7 +37,7 @@ export const createUser = async (req, res) => {
     res.status(200).json({
       success: true,
       message: "User created successfully",
-      data: newUser,
+      data: { name: name, email: email },
     });
   } catch (error) {
     res.status(500).json({
@@ -46,7 +50,7 @@ export const createUser = async (req, res) => {
 
 export const getAllUser = async (req, res) => {
   try {
-    const users = await User.find();
+    const users = await User.find().select("-password");
 
     if (!users) {
       res.status(204).json({

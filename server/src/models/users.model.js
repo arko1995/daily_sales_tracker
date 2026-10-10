@@ -31,6 +31,7 @@ userSchema.pre("save", async function () {
     this.password = await bcrypt.hash(this.password, 10);
   } catch (error) {
     console.log(`Error hashing password ${error}`);
+    throw error;
   }
 });
 
