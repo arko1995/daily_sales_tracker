@@ -212,7 +212,7 @@ export const loginUser = async (req, res) => {
       });
     }
 
-    const user = User.findOne({ email: email });
+    const user = await User.findOne({ email: email });
 
     if (!user) {
       return res.status(404).json({
@@ -221,7 +221,7 @@ export const loginUser = async (req, res) => {
       });
     }
 
-    const passwordMatched = user.verifyPassword(password);
+    const passwordMatched = await user.verifyPassword(password);
 
     if (!passwordMatched) {
       return res.status(403).json({
@@ -230,7 +230,7 @@ export const loginUser = async (req, res) => {
       });
     }
 
-    const { accessToken, refreshToken } = generateToken(user._id);
+    const { accessToken, refreshToken } = await generateToken(user._id);
 
     setCookies(res, accessToken, refreshToken);
 
